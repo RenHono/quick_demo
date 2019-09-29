@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>mybtn.qml</file>
+        <file>test.qml</file>
+        <file>test2.qml</file>
+        <file>Cell.qml</file>
+        <file>window.qml</file>
+        <file>sample.qml</file>
+        <file>FocusWidgetF.qml</file>
+        <file>test3.qml</file>
+        <file>listview.qml</file>
+        <file>test4.qml</file>
+    </qresource>
+</RCC>

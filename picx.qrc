@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/new/src"/>
+    <qresource prefix="/">
+        <file>../qml_demo/pic/1.jpeg</file>
+        <file>../qml_demo/pic/2.jpeg</file>
+        <file>pic/1.jpeg</file>
+        <file>pic/2.jpeg</file>
+        <file>pic/g1.gif</file>
+        <file>main.cpp</file>
+    </qresource>
+</RCC>
