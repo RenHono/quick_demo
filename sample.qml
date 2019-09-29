@@ -795,7 +795,7 @@ Window{
         height: 100
         anchors.left: s26.right
         
-//        color: "blue"
+        //        color: "blue"
         MouseArea{
             
             anchors.fill: parent
@@ -837,7 +837,7 @@ Window{
             Keys.onRightPressed: {
                 
                 s31_rect1.x+=5
-//                s31_rect1.width = 50
+                //                s31_rect1.width = 50
                 s31_rect1.color = "purple"
                 console.log("s31 Right Pressed")
             }
@@ -860,8 +860,215 @@ Window{
     }
     
     Item {
-        id: s32_
+        id: s32
         width: 100
         height: 100
+        anchors.top: s31.bottom
+        anchors.left: s27.right
+        Rectangle{
+            id: s32_rect
+            width: 30
+            height: 30
+            color: "red"
+            Behavior on x{
+                SpringAnimation {
+                    spring: 2
+                    damping: 0.2
+                }
+            }
+            Behavior on y{
+                SpringAnimation {
+                    spring: 2
+                    damping: 0.2
+                }
+            }
+        }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                s32_rect.x = mouse.x - s32_rect.width/2
+                s32_rect.y = mouse.y - s32_rect.height/2
+                
+            }
+        }
     }
+    
+    Item {
+        id: s33
+        width: 100
+        height: 100
+        anchors.top: s22.bottom
+        anchors.left: s28.right
+        
+        Flipable{
+            id: s33_flip
+            width: 100
+            height: 100
+            property bool flipped: false
+            
+            front: Image {
+                id: s33_f
+                width: 100
+                height: 100
+                source: "pic/1.jpeg"
+                anchors.centerIn: parent
+            }
+            back: Image {
+                id: s33_b
+                width: 100
+                height: 100
+                source: "pic/2.jpeg"
+                anchors.centerIn: parent
+            }
+            transform: Rotation{
+                id:s33_rotation
+                origin.x: s33.width/2
+                origin.y: s33.height/2
+                axis.x: 0 
+                axis.y: 1
+                axis.z: 0
+                angle: 0
+            }
+            states: State {
+                name: "back"
+                PropertyChanges {
+                    target: s33_rotation
+                    angle: 180
+                }
+                when: s33_flip.flipped
+            }
+            transitions: Transition {
+                
+                SequentialAnimation{  
+                    PropertyAction {
+                        
+                        target: s33_f; property: "opacity";value: 0.2 }
+                    
+                    PropertyAction {
+                        target: s33_b; property: "opacity";value: 0.2 }
+                    
+                    
+                    NumberAnimation {
+                        target: s33_rotation
+                        property: "angle"
+                        duration: 800
+                        //                easing.type: Easing.InOutQuad
+                    }
+                    
+                    //                    PropertyAction {
+                    //                        target: s33_f; property: "opacity";value: 1 }
+                    
+                    
+                }
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: s33_flip.flipped = !s33_flip.flipped
+            }   
+        }
+    }
+    
+    Item {
+        id: s34
+        anchors.top: s33.bottom
+        anchors.left: s29.right
+        width: 100; height: 100
+        
+        Rectangle {
+            id: s34_rect
+            width: 20; height: 10
+            color: "red"
+            
+            states: State {
+                name: "rotated"
+                PropertyChanges { target: s34_rect; rotation: 180; transformOrigin: Item.BottomRight }
+            }
+            
+            transitions: Transition {
+                SequentialAnimation {
+                    PropertyAction { target: s34_rect; property: "transformOrigin" }
+                    ScriptAction { script: pro_action_finished(s34_rect.state); }
+                    RotationAnimation { duration: 1000; direction: RotationAnimation.Counterclockwise }
+                }
+            }
+            
+            MouseArea {
+                anchors.fill: parent
+                onClicked: s34_rect.state = "rotated";
+            }
+            
+            
+        }
+    }
+    
+    function pro_action_finished(stat){
+        console.log("pro action finished "+stat)
+    }
+    
+    
+    Item{
+        id: s35
+        width: 100
+        height: 100
+        anchors.left: s30.right
+        anchors.top: s34.bottom
+        
+        
+        Rectangle{
+            id: s35_rect
+            width: 50
+            height: 50
+            
+            color: "lightpink"
+            MouseArea{
+                id: s35_ma
+                anchors.fill: parent
+            }
+            states: State {
+                name: "s35_moved"
+                when: s35_ma.pressed
+                PropertyChanges {
+                    target: s35_rect
+                    x: 50
+                    y: 50
+                    
+                }
+            }
+            transitions: [
+                Transition {
+                    
+                    NumberAnimation {
+                        
+                        properties:  "x,y"
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            ]
+        }
+        
+    }
+    
+    Item {
+        id: s36
+        width: 100
+        height: 100
+        anchors.left: s31.right
+        Text {
+            id: s36_app
+            text: "xxxfa"
+        }
+        TextEdit{
+            anchors.top: s36_app.bottom
+            id: s36_textedit
+            text: "please type here .."
+        }
+        Binding{
+            target: s36_app
+            property: "enteredText"
+            value: s36_textedit.text
+        }
+    }
+    
+    
+    
 }
